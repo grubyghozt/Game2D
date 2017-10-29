@@ -35,7 +35,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1378209247732800}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.1, y: 1.43, z: 0}
+  m_LocalPosition: {x: -3.1, y: 1.43, z: -0}
   m_LocalScale: {x: 0.39, y: 0.38, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -57,7 +57,6 @@ MonoBehaviour:
   selectName: Fire1_P
   rotateLeftName: RotateLeft_P
   rotateRightName: RotateRight_P
-  gameController: {fileID: 0}
 --- !u!212 &212159827551752904
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -89,7 +88,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 4bbdbb172cab5cb418871ae1b924a8d1, type: 3}
   m_Color: {r: 0.6764706, g: 0.40787196, b: 0.40787196, a: 1}
   m_FlipX: 0

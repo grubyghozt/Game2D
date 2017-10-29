@@ -9,13 +9,13 @@ public class placeableObject : MonoBehaviour {
         transform.Rotate(Vector3.forward, -90);
     }
     public void select(Transform parent) {
+        transform.parent = parent;
+    }
+    public void place() {
         foreach (SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>()) {
             sr.sortingOrder = 1;
         }
-        transform.parent = parent;
         placed = true;
-    }
-    public void place() {
         transform.parent = null;
     }
 }

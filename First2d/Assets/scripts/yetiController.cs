@@ -42,7 +42,7 @@ public class yetiController : MonoBehaviour, flippable {
         }
 	}
     private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.tag == "Player") {
+        if (collision.collider.gameObject.tag == "Player") {
             collision.gameObject.GetComponent<playerController>().takeDamage(100);
             //collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1000));
         }

@@ -5,9 +5,10 @@ public class playerController : MonoBehaviour, flippable {
     public string jumpName = "Fire1_P";
     public string useName = "Fire2_P";
     public float speed = 10f;
-    public float jumpSpeed = 20f;
+    public float jumpSpeed = 25f;
     public int health=100;
 
+    private int playerNumber;
     private GameObject weapon;
     private bool isJumping;
     private GameController gameController;
@@ -60,11 +61,12 @@ public class playerController : MonoBehaviour, flippable {
         movementName += numOfPlayer;
         jumpName += numOfPlayer;
         useName += numOfPlayer;
+        playerNumber = numOfPlayer;
     }
     public void takeDamage(int damage) {
         health -= damage;
         if (health <= 0) {
-            gameController.playerDied();
+            gameController.playerDied(playerNumber);
             this.gameObject.SetActive(false);
         }
     }

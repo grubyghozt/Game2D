@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class GameController : MonoBehaviour {
@@ -7,6 +9,8 @@ public class GameController : MonoBehaviour {
     public GameObject cursorPrefab;
     public GameObject chestPrefab;
     public GameObject placeableObjectsHolderPrefab;
+    public GameObject scoreTextPrefab;
+    public GameObject scoreBoard;
     public List<GameObject> placeableObjects;
     public int numberOfPlayers=2;
     public List<Color> colors;
@@ -21,6 +25,8 @@ public class GameController : MonoBehaviour {
     private int deadPlayers = 0;
     private List<GameObject> players;
     private List<GameObject> cursors;
+    private int[] scores;
+    private List<GameObject> scoreTexts;
     private GameObject placeableObjectsHolder;
 	
     private void initializeEvents() {
@@ -30,16 +36,17 @@ public class GameController : MonoBehaviour {
         gamestarted += disablePlayers;
         gamestarted += initializePlaceableobjectsHolder;
         gamestarted += randomizeCursorsPosition;
+        gamestarted += initializeScoreBoard;
 
         roundStarted += spawnChests;
         roundStarted += randomizePlayersPosition;
         roundStarted += delayedEnablePlayers;
+        roundStarted += resetRoundStats;
+        roundStarted += addScore;
 
         itemsSelected += disablePlaceableObjectsHolder;
         itemsSelected += enableCursors;
 
-        roundEnded += disablePlayers;
-        roundEnded += resetRoundStats;
         roundEnded += enableCursors;
         roundEnded += enablePlaceableObjectsHolder;
         roundEnded += initializePlaceableobjectsHolder;
@@ -114,6 +121,7 @@ public class GameController : MonoBehaviour {
         placeableObjectsHolder.SetActive(false);
     }
     private void initializePlaceableobjectsHolder() {
+        Debug.Log("inst");
         Bounds bounds = placeableObjectsHolder.GetComponent<SpriteRenderer>().bounds;
         for(int i = 0;  i < numberOfPlayers; i++) {
             Instantiate(placeableObjects[Random.Range(0, placeableObjects.Count)], bounds.center + new Vector3(Random.Range(-bounds.extents.x+2, bounds.extents.x-2), Random.Range(-bounds.extents.y+2, bounds.extents.y-2), 0), Quaternion.identity);
@@ -166,10 +174,11 @@ public class GameController : MonoBehaviour {
             roundStarted();
         }
     }
-    public void playerDied() {
+    public void playerDied(int playerNumber) {
         deadPlayers++;
+        scores[playerNumber - 1]--;
         if(deadPlayers == numberOfPlayers - 1) {
-            roundEnded();
+            StartCoroutine("endRound");
         }
     }
     private void OnTriggerEnter2D(Collider2D collision) {
@@ -184,5 +193,33 @@ public class GameController : MonoBehaviour {
         selectedItems = 0;
         placedItems = 0;
         deadPlayers = 0;
+    }
+    //add score while round begins and then subtract when certain player dies
+    private void addScore() {
+        for(int i = 0;i<scores.Length; i++) {
+            scores[i]++;
+        }
+    }
+    private IEnumerator endRound() {
+        yield return new WaitForSeconds(0.5f);
+        disablePlayers();
+        for(int i = 0; i < scoreTexts.Count; i++) {
+            Text text = scoreTexts[i].GetComponent<Text>();
+            text.text = "Player"+(i+1).ToString()+": " + scores[i].ToString();
+            text.color = colors[i];
+        }
+        scoreBoard.SetActive(true);
+        while (!Input.anyKey) {
+            yield return null;
+        }
+        scoreBoard.SetActive(false);
+        roundEnded();
+    }
+    private void initializeScoreBoard() {
+        scores = new int[numberOfPlayers];
+        scoreTexts = new List<GameObject>();
+        for (int i = 0; i < numberOfPlayers; i++) {
+            scoreTexts.Add(Instantiate(scoreTextPrefab, scoreBoard.transform));
+        }
     }
 }
