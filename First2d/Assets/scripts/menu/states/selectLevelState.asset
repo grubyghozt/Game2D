@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b40fa577c43b3f740a94e68c98bd1dab, type: 3}
+  m_Name: selectLevelState
+  m_EditorClassIdentifier: 
+  gameObjectsInThisState:
+  - {fileID: 1446994089900592, guid: bb49ce23c0c8ee44991365d7c518ed6e, type: 2}
+  - {fileID: 1022641099797270, guid: 73c231997bec1ab42944670f166ca36a, type: 2}
+  backState: {fileID: 11400000, guid: 1024c7d083b8b624496d2693dbcb0203, type: 2}

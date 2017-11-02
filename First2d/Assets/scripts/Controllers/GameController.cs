@@ -12,7 +12,6 @@ public class GameController : MonoBehaviour {
     public GameObject scoreTextPrefab;
     public GameObject scoreBoard;
     public List<GameObject> placeableObjects;
-    public int numberOfPlayers=2;
     public List<Color> colors;
     public delegate void eventAction();
     public event eventAction gamestarted;
@@ -20,6 +19,7 @@ public class GameController : MonoBehaviour {
     public event eventAction roundEnded;
     public event eventAction itemsSelected;
 
+    private int numberOfPlayers = 2;
     private int selectedItems = 0;
     private int placedItems = 0;
     private int deadPlayers = 0;
@@ -56,6 +56,7 @@ public class GameController : MonoBehaviour {
         if (instance == null) {
             instance = this;
         }
+        numberOfPlayers = globalOptions.numberOfPlayers;
         colors = new List<Color>();
         colors.Add(Color.green);
         colors.Add(Color.red);
@@ -201,7 +202,7 @@ public class GameController : MonoBehaviour {
         }
     }
     private IEnumerator endRound() {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         disablePlayers();
         for(int i = 0; i < scoreTexts.Count; i++) {
             Text text = scoreTexts[i].GetComponent<Text>();
